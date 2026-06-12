@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Design Toolbox</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <!-- ─── Sidebar ─── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon">⬡</span>
+          <span class="logo-text">CSS Toolbox</span>
+        </div>
+        <button class="collapse-btn" id="collapseBtn" title="Collapse sidebar" aria-label="Collapse sidebar">‹</button>
+      </div>
+
+      <div class="search-wrap">
+        <input type="search" id="searchInput" class="search-input"
+               placeholder="Search tools…" aria-label="Search tools" autocomplete="off">
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav" aria-label="Tool navigation">
+        <!-- populated by JS -->
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="icon-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌙</button>
+        <button class="icon-btn" id="cheatSheetBtn" title="Cheat sheet" aria-label="Cheat sheet">📖</button>
+        <button class="icon-btn" id="exportBtn" title="Export settings" aria-label="Export JSON settings">⬆</button>
+        <button class="icon-btn" id="importBtn" title="Import settings" aria-label="Import JSON settings">⬇</button>
+      </div>
+    </aside>
+
+    <!-- ─── Main area ─── -->
+    <div class="main-wrap">
+      <!-- Top bar -->
+      <header class="topbar" id="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn" id="menuBtn" aria-label="Toggle sidebar">☰</button>
+          <nav class="breadcrumb" id="breadcrumb" aria-label="Current tool"></nav>
+        </div>
+        <div class="topbar-right">
+          <div class="device-btns" id="deviceBtns" role="group" aria-label="Device preview">
+            <button class="device-btn active" data-device="desktop" title="Desktop view" aria-pressed="true">🖥</button>
+            <button class="device-btn" data-device="tablet"  title="Tablet view"  aria-pressed="false">📱</button>
+            <button class="device-btn" data-device="mobile"  title="Mobile view"  aria-pressed="false">📲</button>
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-btn" id="historyBtn"   title="Undo / redo history"  aria-label="History">⏮</button>
+            <button class="icon-btn" id="randomizeBtn" title="Randomize values"     aria-label="Randomize">🎲</button>
+            <button class="icon-btn" id="compareBtn"   title="Compare mode"         aria-label="Compare">⊞</button>
+            <button class="icon-btn" id="pinBtn"       title="Pin / unpin tool"     aria-label="Pin tool">☆</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Tool canvas -->
+      <main class="main-content" id="mainContent">
+        <!-- welcome screen shown by default; replaced when a tool is selected -->
+        <div class="welcome-screen" id="welcomeScreen">
+          <div class="welcome-hero">
+            <div class="welcome-icon">⬡</div>
+            <h1>CSS Design Toolbox</h1>
+            <p>A comprehensive front-end design tool with live previews and generated code.</p>
+          </div>
+          <div class="welcome-grid" id="welcomeGrid"><!-- populated by JS --></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Floating toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- History drawer -->
+  <div class="drawer" id="historyDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <h3>History</h3>
+      <button class="icon-btn" id="closeHistoryBtn" aria-label="Close history">✕</button>
+    </div>
+    <div class="drawer-body" id="historyList"></div>
+    <div class="drawer-footer">
+      <button class="btn btn-secondary" id="clearHistoryBtn">Clear history</button>
+    </div>
+  </div>
+
+  <!-- Cheat sheet drawer -->
+  <div class="drawer drawer-right" id="cheatDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <h3>CSS Cheat Sheet</h3>
+      <button class="icon-btn" id="closeCheatBtn" aria-label="Close cheat sheet">✕</button>
+    </div>
+    <div class="drawer-body" id="cheatContent"><!-- populated by JS --></div>
+  </div>
+
+  <!-- Overlay for drawers -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Compare mode container -->
+  <div class="compare-container hidden" id="compareContainer">
+    <div class="compare-panel" id="compareA"><span class="compare-label">Before</span></div>
+    <div class="compare-divider"></div>
+    <div class="compare-panel" id="compareB"><span class="compare-label">After</span></div>
+    <button class="icon-btn compare-close" id="closeCompareBtn">✕</button>
+  </div>
+
+  <!-- Hidden file input for JSON import -->
+  <input type="file" id="importFile" accept=".json" style="display:none" aria-hidden="true">
+
+  <!-- Scripts – order matters: framework first, then tools, then init -->
+  <script src="js/app.js"></script>
+  <script src="js/tools-core-css.js"></script>
+  <script src="js/tools-typography.js"></script>
+  <script src="js/tools-shapes.js"></script>
+  <script src="js/tools-components.js"></script>
+  <script src="js/tools-utilities.js"></script>
+</body>
+</html>
