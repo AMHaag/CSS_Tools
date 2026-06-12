@@ -221,7 +221,7 @@ const CSSToolbox = (() => {
     persistState();
   }
 
-  function createPanel(tool, mountTarget = document.getElementById('mainContent')) {
+  function createPanel(tool, mountTarget) {
     const panel = document.createElement('div');
     panel.className = 'tool-panel';
     panel.id = `panel-${tool.id}`;
@@ -279,7 +279,7 @@ const CSSToolbox = (() => {
     body.appendChild(preview);
     panel.appendChild(body);
 
-    if (mountTarget && !panel.isConnected) {
+    if (mountTarget) {
       mountTarget.appendChild(panel);
     }
 
