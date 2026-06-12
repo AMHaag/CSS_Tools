@@ -199,7 +199,9 @@ const CSSToolbox = (() => {
     let panel = document.getElementById(`panel-${toolId}`);
     if (!panel) {
       panel = createPanel(tool);
-      document.getElementById('mainContent').appendChild(panel);
+      if (!panel.isConnected) {
+        document.getElementById('mainContent').appendChild(panel);
+      }
     }
     panel.classList.add('active');
 
@@ -278,6 +280,11 @@ const CSSToolbox = (() => {
     body.appendChild(controls);
     body.appendChild(preview);
     panel.appendChild(body);
+
+    const mainContent = document.getElementById('mainContent');
+    if (mainContent && !panel.isConnected) {
+      mainContent.appendChild(panel);
+    }
 
     // Let the tool render itself
     if (typeof tool.render === 'function') {
