@@ -152,7 +152,7 @@ CSSToolbox.register({
       Object.assign(s, { tl1:r(), tl2:r(), tr1:r(), tr2:r(), br1:r(), br2:r(), bl1:r(), bl2:r() });
       controls.innerHTML = '';
       preview.innerHTML = '';
-      CSSToolbox.register['blob-shape']?.render?.(controls, preview, s, onChange);
+      CSSToolbox.getTool('blob-shape')?.render?.(controls, preview, s, onChange);
       // rebuild — re-call render
     });
 

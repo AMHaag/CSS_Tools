@@ -861,7 +861,7 @@ CSSToolbox.register({
       Object.assign(s, { blur:0, brightness:100, contrast:100, saturate:100, grayscale:0, sepia:0, hueRotate:0, invert:0, opacity:100 });
       controls.innerHTML = '';
       preview.innerHTML = '';
-      CSSToolbox.register['filter']?.render?.(controls, preview, s, onChange);
+      CSSToolbox.getTool('filter')?.render?.(controls, preview, s, onChange);
     });
     controls.appendChild(resetBtn);
 

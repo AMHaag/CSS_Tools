@@ -996,6 +996,7 @@ const CSSToolbox = (() => {
       setOutput,
     },
     // Utilities for tools
+    getTool: (id) => registry[id],
     getToolState: (id) => state.toolStates[id],
     getTheme: () => state.theme,
   };
