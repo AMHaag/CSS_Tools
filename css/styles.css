@@ -185,6 +185,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.3; }
   height: var(--topbar-h);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
+  position: relative;
 }
 
 .logo {
@@ -208,6 +209,15 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.3; }
   flex-shrink: 0;
 }
 .collapse-btn:hover { color: var(--text1); background: var(--bg3); }
+.sidebar.collapsed .sidebar-header { padding: 0 8px; }
+.sidebar.collapsed .logo { gap: 0; }
+.sidebar.collapsed .logo-text { display: none; }
+.sidebar.collapsed .collapse-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+}
 
 .search-wrap {
   padding: 10px 12px 8px;

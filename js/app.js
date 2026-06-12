@@ -87,6 +87,36 @@ const CSSToolbox = (() => {
     } catch (_) { /* ignore */ }
   }
 
+  function isMobileViewport() {
+    return window.matchMedia('(max-width: 640px)').matches;
+  }
+
+  function updateSidebarControls() {
+    const collapseBtn = document.getElementById('collapseBtn');
+    if (collapseBtn) {
+      const action = state.sidebarCollapsed ? 'Expand' : 'Collapse';
+      collapseBtn.textContent = state.sidebarCollapsed ? '›' : '‹';
+      collapseBtn.title = `${action} sidebar`;
+      collapseBtn.setAttribute('aria-label', `${action} sidebar`);
+    }
+
+    const menuBtn = document.getElementById('menuBtn');
+    if (menuBtn && !isMobileViewport()) {
+      const action = state.sidebarCollapsed ? 'Expand' : 'Collapse';
+      menuBtn.title = `${action} sidebar`;
+      menuBtn.setAttribute('aria-label', `${action} sidebar`);
+    }
+  }
+
+  function setSidebarCollapsed(collapsed) {
+    const sb = document.getElementById('sidebar');
+    if (!sb) return;
+    state.sidebarCollapsed = collapsed;
+    sb.classList.toggle('collapsed', state.sidebarCollapsed);
+    updateSidebarControls();
+    persistState();
+  }
+
   /* ══════════════════════════════════════════════
      5.  Sidebar Navigation
   ══════════════════════════════════════════════ */
@@ -110,6 +140,7 @@ const CSSToolbox = (() => {
     if (state.sidebarCollapsed) {
       document.getElementById('sidebar').classList.add('collapsed');
     }
+    updateSidebarControls();
   }
 
   function buildSection(label, icon, tools) {
@@ -636,12 +667,7 @@ const CSSToolbox = (() => {
     // Sidebar collapse
     const collapseBtn = document.getElementById('collapseBtn');
     if (collapseBtn) {
-      collapseBtn.addEventListener('click', () => {
-        const sb = document.getElementById('sidebar');
-        state.sidebarCollapsed = !state.sidebarCollapsed;
-        sb.classList.toggle('collapsed', state.sidebarCollapsed);
-        persistState();
-      });
+      collapseBtn.addEventListener('click', () => setSidebarCollapsed(!state.sidebarCollapsed));
     }
 
     // Mobile sidebar toggle
@@ -649,7 +675,12 @@ const CSSToolbox = (() => {
     if (menuBtn) {
       menuBtn.addEventListener('click', () => {
         const sb = document.getElementById('sidebar');
-        sb.classList.toggle('open');
+        if (!sb) return;
+        if (isMobileViewport()) {
+          sb.classList.toggle('open');
+          return;
+        }
+        setSidebarCollapsed(!state.sidebarCollapsed);
       });
     }
 
@@ -736,6 +767,8 @@ const CSSToolbox = (() => {
       // Ctrl+/ → open cheat sheet
       if (e.ctrlKey && e.key === '/') { e.preventDefault(); openDrawer('cheatDrawer'); }
     });
+
+    window.addEventListener('resize', updateSidebarControls);
   }
 
   /* ══════════════════════════════════════════════
