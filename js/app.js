@@ -184,6 +184,7 @@ const CSSToolbox = (() => {
   function showTool(toolId) {
     const tool = registry[toolId];
     if (!tool) return;
+    const mainContent = document.getElementById('mainContent');
 
     state.activeTool = toolId;
     localStorage.setItem('ctb_last_tool', toolId);
@@ -198,10 +199,7 @@ const CSSToolbox = (() => {
     // Get or create the panel
     let panel = document.getElementById(`panel-${toolId}`);
     if (!panel) {
-      panel = createPanel(tool);
-      if (!panel.isConnected) {
-        document.getElementById('mainContent').appendChild(panel);
-      }
+      panel = createPanel(tool, mainContent);
     }
     panel.classList.add('active');
 
@@ -223,7 +221,7 @@ const CSSToolbox = (() => {
     persistState();
   }
 
-  function createPanel(tool) {
+  function createPanel(tool, mountTarget = document.getElementById('mainContent')) {
     const panel = document.createElement('div');
     panel.className = 'tool-panel';
     panel.id = `panel-${tool.id}`;
@@ -281,9 +279,8 @@ const CSSToolbox = (() => {
     body.appendChild(preview);
     panel.appendChild(body);
 
-    const mainContent = document.getElementById('mainContent');
-    if (mainContent && !panel.isConnected) {
-      mainContent.appendChild(panel);
+    if (mountTarget && !panel.isConnected) {
+      mountTarget.appendChild(panel);
     }
 
     // Let the tool render itself
