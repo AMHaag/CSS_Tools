@@ -185,6 +185,7 @@ const CSSToolbox = (() => {
     const tool = registry[toolId];
     if (!tool) return;
     const mainContent = document.getElementById('mainContent');
+    if (!mainContent) return;
 
     state.activeTool = toolId;
     localStorage.setItem('ctb_last_tool', toolId);
