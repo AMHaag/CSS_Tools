@@ -26,6 +26,7 @@ const CSSToolbox = (() => {
 
   /* Tool registry: id → toolDef */
   const registry = {};
+  const mobileViewportQuery = window.matchMedia('(max-width: 640px)');
 
   /* Section metadata */
   const sections = {
@@ -88,7 +89,7 @@ const CSSToolbox = (() => {
   }
 
   function isMobileViewport() {
-    return window.matchMedia('(max-width: 640px)').matches;
+    return mobileViewportQuery.matches;
   }
 
   function updateSidebarControls() {
@@ -768,7 +769,7 @@ const CSSToolbox = (() => {
       if (e.ctrlKey && e.key === '/') { e.preventDefault(); openDrawer('cheatDrawer'); }
     });
 
-    window.addEventListener('resize', updateSidebarControls);
+    mobileViewportQuery.addEventListener('change', updateSidebarControls);
   }
 
   /* ══════════════════════════════════════════════
